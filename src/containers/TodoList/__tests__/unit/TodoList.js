@@ -15,7 +15,7 @@ describe('TodoList 组件', () => {
     const wrapper = shallowMount(TodoList)
     const content = 'some value'
     wrapper.vm.addUndoItem(content)
-    expect(wrapper.vm.$data.undolist).toEqual(['some value'])
+    expect(wrapper.vm.$data.undolist).toEqual([{ status: 'div', value: 'some value' }])
 
     // const wrapper = shallowMount(TodoList)
     // const header = wrapper.findComponent(Header)
@@ -35,9 +35,33 @@ describe('TodoList 组件', () => {
   it('中调用handleItemDelete方法，undolist列表内容会减少一个', async () => {
     const wrapper = shallowMount(TodoList)
     wrapper.setData({
-      undolist: [1, 2, 3]
+      undolist: [
+        { status: 'div', value: 1 },
+        { status: 'div', value: 2 },
+        { status: 'div', value: 3 }
+      ]
     })
     wrapper.vm.handleItemDelete(1)
-    expect(wrapper.vm.$data.undolist).toEqual([1, 3])
+    expect(wrapper.vm.$data.undolist).toEqual([
+      { status: 'div', value: 1 },
+      { status: 'div', value: 3 }
+    ])
+  })
+
+  it('changeStatus 方法执行时，UndoList 内容变化', async () => {
+    const wrapper = shallowMount(TodoList)
+    wrapper.setData({
+      undolist: [
+        { status: 'div', value: 1 },
+        { status: 'div', value: 2 },
+        { status: 'div', value: 3 }
+      ]
+    })
+    wrapper.vm.changeStatus(1)
+    expect(wrapper.vm.$data.undolist).toEqual([
+      { status: 'div', value: 1 },
+      { status: 'input', value: 2 },
+      { status: 'div', value: 3 }
+    ])
   })
 })
