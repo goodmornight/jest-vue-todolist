@@ -8,7 +8,7 @@
       <li
         v-for="(item, index) in list"
         :key="index"
-        data-test="item"
+        data-test="todo-item"
         class="item"
         @click="changeStatus(index)"
       >
