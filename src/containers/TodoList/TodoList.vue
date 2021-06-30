@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Header from './components/Header.vue'
 import UndoList from './components/UndoList.vue'
 
@@ -17,6 +18,15 @@ export default {
     return {
       undolist: []
     }
+  },
+  mounted () {
+    setTimeout(() => {
+      axios.get('/getUndoList.json').then((res) => {
+        this.undolist = res.data
+      }).catch(e => {
+        console.log(e)
+      })
+    })
   },
   methods: {
     addUndoItem (value) {
