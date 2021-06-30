@@ -20,12 +20,10 @@ export default {
     }
   },
   mounted () {
-    setTimeout(() => {
-      axios.get('/getUndoList.json').then((res) => {
-        this.undolist = res.data
-      }).catch(e => {
-        console.log(e)
-      })
+    axios.get('/getUndoList.json').then((res) => {
+      this.undolist = res.data
+    }).catch(e => {
+      // console.log(e)
     })
   },
   methods: {
