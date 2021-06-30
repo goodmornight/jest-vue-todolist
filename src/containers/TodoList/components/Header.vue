@@ -5,7 +5,8 @@
       <input
         class='header-input'
         data-test='header-input'
-        v-model="inputValue"
+        :value="inputValue"
+        @input="e => changeInputValue(e.target.value)"
         @keyup.enter="addItem"
         placeholder="Add TodoItem"
       />
@@ -14,12 +15,13 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'Header',
-  data () {
-    return {
-      inputValue: ''
-    }
+  computed: {
+    ...mapState({
+      inputValue: state => state.inputValue
+    })
   },
   methods: {
     addItem () {
@@ -27,7 +29,10 @@ export default {
         this.$emit('add', this.inputValue)
         this.inputValue = ''
       }
-    }
+    },
+    ...mapMutations({
+      changeInputValue: 'changeInputValue'
+    })
   }
 }
 </script>
